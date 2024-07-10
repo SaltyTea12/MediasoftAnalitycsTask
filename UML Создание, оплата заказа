@@ -1,0 +1,74 @@
+@startuml
+Participant Client as c
+Participant Frontend as f
+Participant Backend as b
+Participant DB as db
+Participant Payment as p
+Participant Antifrod as a
+
+Activate c
+activate f
+c->f : Клиент оформляет заказ
+
+activate b
+f->b : Передает данные заказа
+
+activate db
+b->db : Регистрирует данные заказа
+
+alt Данные адресов пользователя есть в системе
+db --> b :Передает данные адресов пользователя
+deactivate db
+b-->f : Предлагает клиенту выбрать из предложенных вариантов
+deactivate b
+
+else Данных адресов пользователя нет в системе
+db --> b :Запрашивает адрес доставки
+deactivate db
+b-->f: Запрашивает адрес доставки
+deactivate b
+f-->c:Запрашивает адрес доставки
+end
+
+c->f :Вводит данные для доставки
+activate b
+f->b :Передает данные для доставки
+activate db
+b->db: Регистрирует данные для доставки в заказ
+
+db-->b :Заказ создан, требуется оплата
+deactivate db
+b-->f: Заказ создан, требуется оплата
+deactivate b
+f->p :Перевести на форму оплаты
+
+activate p
+p-->c: Отображается форма оплаты
+c->p : Вводит данные для оплаты
+p->>a : Проверка данных
+activate a
+
+alt Реквизиты корректны?
+a-->p:Реквизиты корректны
+deactivate a
+p->p:Списывается оплата
+p-->f:Возвращается статус заказа
+deactivate p
+activate b
+f->b:Изменить статус заказа на "Оплачено"
+activate db
+b->db:
+db->db: Статус заказа меняется на оплачено
+db-->b:
+deactivate db
+b-->f:
+deactivate b
+f-->c: Заказ создан успешно
+
+else
+a-->p: Реквизиты некорректны
+deactivate a
+p-->c: Введите корректные данные
+
+end
+@enduml
