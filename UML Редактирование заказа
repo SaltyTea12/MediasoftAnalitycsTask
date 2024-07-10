@@ -1,0 +1,64 @@
+@startuml
+Participant Client as c
+Participant Frontend as f
+Participant Backend as b
+Participant DB as db
+
+activate c
+activate f
+c->f: Пользователь добавляет товар в корзину
+
+activate b
+f->b: Передает данные
+
+activate db
+b->db: Регистрирует заказ в корзине
+
+db-->b: Товар добавлен в корзину
+deactivate db
+
+b-->f: Добавляет товар в корзину
+deactivate b
+
+f-->c: Товар добавлен в корзину
+
+
+
+
+
+c->f: Пользователь удаляет товар из корзины
+
+activate b
+f->b: Запрос на удаление товара из корзины
+
+activate db
+b->db: Удаление товара из корзины
+
+db-->b: Товар удален из корзины
+deactivate db
+
+b-->f: Удаляет товар из корзины
+deactivate b
+
+f-->c: Товар удален из корзины
+
+
+
+c->f: Изменяет количество товара
+
+activate b
+f->b: Запрос на изменение количества товара
+
+activate db
+b->db: Изменить количество товара
+
+db-->b: Количество товара изменено
+deactivate db
+
+b-->f: Изменить количество товара
+deactivate b
+
+f-->c: Количество товара изменено
+
+
+@enduml
