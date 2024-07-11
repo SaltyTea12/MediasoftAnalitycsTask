@@ -55,5 +55,37 @@ API-методы представлены в таблице "API-методы.pd
 5. Перед вами реляционная модель данных. Необходимо написать SQL-запросы.
 
 - Вывести покупателей с количеством осуществленных покупок
+ 
+SELECT BUYERS.FNAME, BUYERS.NAME, COUNT(DISTINCT PURCHASES.ID_P)
+
+FROM BUYERS, PURCHASES
+
+WHERE BUYERS.ID = PURCHASES.ID_B
+
+GROUP BY BUYERS.FNAME, BUYERS.NAME;
+
 - Общую стоимость товаров для каждого покупателя и отсортировать результат в порядке убывания
+
+SELECT BUYERS.FNAME, BUYERS.NAME, SUM(PRODUCTS.PRICE)
+
+FROM BUYERS
+
+LEFT JOIN PURCHASES ON BUYERS.ID = PURCHASES.ID_B
+
+LEFT JOIN PRODUCTS ON PURCHASES.ID_PR = PRODUCTS.ID_PR
+
+GROUP BY BUYERS.FNAME, BUYERS.NAME 
+
+ORDER BY SUM(PRODUCTS.PRICE) DESC;
+
 - Получить покупателей, купивших только один товар
+
+SELECT BUYERS.FNAME, BUYERS.NAME
+
+FROM BUYERS
+
+LEFT JOIN PURCHASES ON BUYERS.ID = PURCHASES.ID_B
+
+HAVING COUNT(PURCHASES.ID_PR) = 1
+
+GROUP BY BUYERS.FNAME, BUYERS.NAME;
