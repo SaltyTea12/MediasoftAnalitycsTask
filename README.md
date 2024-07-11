@@ -19,6 +19,10 @@
 
 В файле "UML Activity.png" представлена диаграмма UML Activity.
 
+Более подробно можно ознакомиться по ссылке 
+
+https://drive.google.com/file/d/1XnR_MbgAuJ4QRFyAUiMr1bJRwMfkbeN6/view?usp=sharing
+
 В файле "ERD.png" представлена ER-диаграмма сущностей. Более подробно с ней можно ознакомиться по ссылке 
 
 https://drive.google.com/file/d/1rI1UmVGnFQHwu6Mf0JBzboAHIZpnjCT0/view?usp=sharing
